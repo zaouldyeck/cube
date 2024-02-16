@@ -2,6 +2,11 @@
 
 WIP!
 
+# How to build
+
+```
+GOOS=linux GOARCH=amd64 go build .
+```
 
 # A test run
 
