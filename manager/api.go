@@ -8,6 +8,7 @@ import (
 
 func (a *Api) initRouter() {
 	a.Router = chi.NewRouter()
+
 	a.Router.Route("/tasks", func(r chi.Router) {
 		r.Post("/", a.StartTaskHandler)
 		r.Get("/", a.GetTasksHandler)
