@@ -2,16 +2,25 @@
 
 WIP!
 
+# How to build
+
+```
+GOOS=linux GOARCH=amd64 go build .
+```
 
 # A test run
 
 From a Linux host:
 
+```
 sudo CUBE_WORKER_HOST=localhost CUBE_WORKER_PORT=5555 CUBE_MANAGER_HOST=localhost CUBE_MANAGER_PORT=5556 ./cube
+```
 
 From another terminal you could POST some json. Here is an example of submitting a task to the manager:
 
+```
 curl -v -X POST localhost:5556/tasks -d @task1.json
+```
 
 Example JSON:
 
