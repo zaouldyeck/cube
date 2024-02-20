@@ -2,13 +2,25 @@ package manager
 
 import (
 	"fmt"
-	"github.com/go-chi/chi/v5"
 	"net/http"
+
+	"github.com/go-chi/chi/v5"
 )
+
+type ErrResponse struct {
+	HTTPStatusCode int
+	Message        string
+}
+
+type Api struct {
+	Address string
+	Port    int
+	Manager *Manager
+	Router  *chi.Mux
+}
 
 func (a *Api) initRouter() {
 	a.Router = chi.NewRouter()
-
 	a.Router.Route("/tasks", func(r chi.Router) {
 		r.Post("/", a.StartTaskHandler)
 		r.Get("/", a.GetTasksHandler)
