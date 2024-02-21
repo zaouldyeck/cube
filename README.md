@@ -1,5 +1,13 @@
 # cube
 
+# What is this?
+
+A simple Docker container orchestrator I created as a learning Go project.
+It sets up a manager component and worker processes, allowing you to schedule
+tasks (containers) onto the workers using the manager API.
+
+Task state is maintained very simply using BoltDB embedded into the application.
+
 
 # How to build
 
