@@ -31,9 +31,9 @@ func New(name string, taskDbType string) *Worker {
 	switch taskDbType {
 	case "memory":
 		s = store.NewInMemoryTaskStore()
-		//case "persistent":
-		//	filename := fmt.Sprintf("%s_tasks.db", name)
-		//	s, err = store.NewTaskStore(filename, 0600, "tasks")
+	case "persistent":
+		filename := fmt.Sprintf("%s_tasks.db", name)
+		s, err = store.NewTaskStore(filename, 0600, "tasks")
 	}
 	if err != nil {
 		log.Printf("eunable to create new task store: %v", err)
@@ -190,10 +190,6 @@ func (w *Worker) UpdateTasks() {
 }
 
 func (w *Worker) updateTasks() {
-	// for each task in the worker's datastore:
-	// 1. call InspectTask method
-	// 2. verify task is in running state
-	// 3. if task is not in running state, or not running at all, mark task as `failed`
 	tasks, err := w.Db.List()
 	if err != nil {
 		log.Printf("error getting list of tasks: %v\n", err)

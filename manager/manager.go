@@ -71,9 +71,9 @@ func New(workers []string, schedulerType string, dbType string) *Manager {
 	case "memory":
 		ts = store.NewInMemoryTaskStore()
 		es = store.NewInMemoryTaskEventStore()
-		//case "persistent":
-		//	ts, err = store.NewTaskStore("tasks.db", 0600, "tasks")
-		//	es, err = store.NewEventStore("events.db", 0600, "events")
+	case "persistent":
+		ts, err = store.NewTaskStore("tasks.db", 0600, "tasks")
+		es, err = store.NewEventStore("events.db", 0600, "events")
 	}
 
 	if err != nil {

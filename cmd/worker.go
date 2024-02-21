@@ -24,7 +24,13 @@ about task state`,
 		dbType, _ := cmd.Flags().GetString("dbtype")
 
 		log.Println("Starting worker...")
-		w := worker.
+		w := worker.New(name, dbType)
+		api := worker.Api{Address: host, Port: port, Worker: w}
+		go w.RunTasks()
+		go w.CollectStats()
+		go w.UpdateTasks()
+		log.Printf("Starting worker API http://%s:%d", host, port)
+		api.Start()
 	},
 }
 
