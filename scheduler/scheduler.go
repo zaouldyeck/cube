@@ -1,11 +1,12 @@
 package scheduler
 
 import (
-	"github.com/zaouldyeck/cube/node"
-	"github.com/zaouldyeck/cube/task"
 	"log"
 	"math"
 	"time"
+
+	"github.com/zaouldyeck/cube/node"
+	"github.com/zaouldyeck/cube/task"
 )
 
 const (

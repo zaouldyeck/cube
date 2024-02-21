@@ -2,9 +2,10 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
 	"log"
 	"net/http"
+
+	"github.com/spf13/cobra"
 )
 
 // stopCmd represents the stop command

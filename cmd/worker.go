@@ -2,9 +2,10 @@ package cmd
 
 import (
 	"fmt"
+	"log"
+
 	"github.com/google/uuid"
 	"github.com/zaouldyeck/cube/worker"
-	"log"
 
 	"github.com/spf13/cobra"
 )

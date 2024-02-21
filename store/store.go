@@ -3,10 +3,11 @@ package store
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/boltdb/bolt"
-	"github.com/zaouldyeck/cube/task"
 	"log"
 	"os"
+
+	"github.com/boltdb/bolt"
+	"github.com/zaouldyeck/cube/task"
 )
 
 type Store interface {

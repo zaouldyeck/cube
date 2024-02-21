@@ -1,9 +1,10 @@
 package cmd
 
 import (
+	"log"
+
 	"github.com/spf13/cobra"
 	"github.com/zaouldyeck/cube/manager"
-	"log"
 )
 
 // managerCmd represents the manager command

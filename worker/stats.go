@@ -1,8 +1,9 @@
 package worker
 
 import (
-	"github.com/c9s/goprocinfo/linux"
 	"log"
+
+	"github.com/c9s/goprocinfo/linux"
 )
 
 type Stats struct {

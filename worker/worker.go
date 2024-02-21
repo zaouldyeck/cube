@@ -3,12 +3,13 @@ package worker
 import (
 	"errors"
 	"fmt"
+	"log"
+	"time"
+
 	"github.com/golang-collections/collections/queue"
 	"github.com/zaouldyeck/cube/stats"
 	"github.com/zaouldyeck/cube/store"
 	"github.com/zaouldyeck/cube/task"
-	"log"
-	"time"
 )
 
 type Worker struct {

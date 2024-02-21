@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/zaouldyeck/cube/stats"
-	"github.com/zaouldyeck/cube/utils"
 	"io"
 	"log"
 	"net/http"
+
+	"github.com/zaouldyeck/cube/stats"
+	"github.com/zaouldyeck/cube/utils"
 )
 
 type Node struct {

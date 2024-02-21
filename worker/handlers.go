@@ -3,12 +3,13 @@ package worker
 import (
 	"encoding/json"
 	"fmt"
+	"log"
+	"net/http"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
 	"github.com/zaouldyeck/cube/stats"
 	"github.com/zaouldyeck/cube/task"
-	"log"
-	"net/http"
 )
 
 func (a *Api) StartTaskHandler(w http.ResponseWriter, r *http.Request) {
