@@ -1,6 +1,5 @@
 # cube
 
-WIP!
 
 # How to build
 
@@ -8,18 +7,39 @@ WIP!
 GOOS=linux GOARCH=amd64 go build .
 ```
 
-# A test run
+# CLI flags
+
+```
+./cube worker --help
+./cube manager --help
+```
+
+# How do I use this with persistent state maintained (for a test run locally)?
 
 From a Linux host:
 
 ```
-sudo CUBE_WORKER_HOST=localhost CUBE_WORKER_PORT=5555 CUBE_MANAGER_HOST=localhost CUBE_MANAGER_PORT=5556 ./cube
+# Setup workers from one terminal per worker
+sudo ./cube worker --port 5556 -d persistent
+sudo ./cube worker --port 5557 -d persistent
+sudo ./cube worker --port 5558 -d persistent
+```
+
+```
+# Setup the manager from another terminal
+sudo ./cube manager -w 'localhost:5556,localhost:5557,localhost:5558' -d persistent
 ```
 
 From another terminal you could POST some json. Here is an example of submitting a task to the manager:
 
 ```
-curl -v -X POST localhost:5556/tasks -d @task1.json
+sudo ./cube run --filename task1.json
+```
+
+How to stop a task:
+
+```
+sudo ./cube stop bb1d59ef-9fc1-4e4b-a44d-db571eeed203
 ```
 
 Example JSON:
