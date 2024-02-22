@@ -9,7 +9,7 @@ import (
 	"net/http"
 
 	"github.com/zaouldyeck/cube/stats"
-	"github.com/zaouldyeck/cube/utils"
+	"github.com/zaouldyeck/cube/httphelpers"
 )
 
 type Node struct {
@@ -39,7 +39,7 @@ func (n *Node) GetStats() (*stats.Stats, error) {
 	var err error
 
 	url := fmt.Sprintf("%s/stats", n.Api)
-	resp, err = utils.HTTPWithRetry(http.Get, url)
+	resp, err = httphelpers.HTTPWithRetry(http.Get, url)
 	if err != nil {
 		msg := fmt.Sprintf("Unable to connect to %v. Permanent failure.\n", n.Api)
 		log.Println(msg)
