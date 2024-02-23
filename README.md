@@ -1,5 +1,5 @@
 # cube
-[![Go Report Card](https://goreportcard.com/badge/github.com/kubernetes/kubernetes)]
+![Go Report Card](https://goreportcard.com/badge/github.com/kubernetes/kubernetes)
 
 # What is this?
 
