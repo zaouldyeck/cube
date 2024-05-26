@@ -1,74 +1,77 @@
-# cube
-![Go Report Card](https://goreportcard.com/badge/github.com/kubernetes/kubernetes)
+# Cube Project Architecture Documentation
 
-# What is this?
+## Overview
+Cube is a simple Docker container orchestrator written in Go. It provides a lightweight system for managing and scheduling tasks across multiple worker nodes using an API. The project is designed with simplicity and scalability in mind, leveraging BoltDB for state persistence.
 
-A simple Docker container orchestrator I created as a learning Go project.
-It sets up a manager component and worker processes, allowing you to schedule
-tasks (containers) onto the workers using the manager API.
+## Components
+### Manager
+- **Responsibilities**: 
+  - Manages task distribution to workers.
+  - Coordinates worker processes.
+  - Exposes API endpoints for task submission and monitoring.
+- **Implementation**: 
+  - Listens on a designated port for API requests.
+  - Maintains a registry of available workers and their statuses.
 
-Task state is maintained very simply using BoltDB embedded into the application.
+### Workers
+- **Responsibilities**: 
+  - Execute tasks as assigned by the manager.
+  - Report status back to the manager.
+- **Implementation**: 
+  - Run as separate processes, each listening on a unique port.
+  - Can execute various types of tasks defined by the manager.
 
+### Scheduler
+- **Responsibilities**: 
+  - Handles the scheduling logic for task distribution.
+  - Ensures tasks are balanced across available workers.
+- **Implementation**: 
+  - Uses algorithms to determine the optimal worker for each task.
+  - Can be extended to support different scheduling policies.
 
-# How to build
+### Task State
+- **Responsibilities**: 
+  - Maintain the state of tasks, including their statuses and results.
+- **Implementation**: 
+  - Uses BoltDB for persistent storage.
+  - Ensures task states are recoverable in case of system restarts.
 
-```
-GOOS=linux GOARCH=amd64 go build .
-```
+## API
+### Endpoints
+- **/tasks**: Submit a new task.
+  - **Method**: POST
+  - **Payload**: JSON object describing the task.
+- **/tasks/{id}**: Get task status.
+  - **Method**: GET
+  - **Response**: JSON object with task status and result.
 
-# CLI flags
+## Setup
+### Manager Setup
+1. Clone the repository.
+2. Build the manager component using `go build -o manager ./cmd/manager`.
+3. Start the manager: `./manager`.
 
-```
-./cube worker --help
-./cube manager --help
-```
+### Worker Setup
+1. Clone the repository on each worker node.
+2. Build the worker component using `go build -o worker ./cmd/worker`.
+3. Start each worker on a different port: `./worker -port=<port>`.
 
-# How do I use this with persistent state maintained (for a test run locally)?
+### Configuration
+- The manager needs to be configured with the list of worker nodes and their ports.
+- This can be done via a configuration file or environment variables.
 
-From a Linux host:
+## Example Usage
+1. Start the manager on the master node.
+2. Start workers on several nodes.
+3. Submit tasks via the API: `curl -X POST -d '{"task": "example"}' http://manager:port/tasks`.
+4. Check task status: `curl http://manager:port/tasks/{id}`.
 
-```
-# Setup workers from one terminal per worker
-sudo ./cube worker --port 5556 -d persistent
-sudo ./cube worker --port 5557 -d persistent
-sudo ./cube worker --port 5558 -d persistent
-```
+## State Persistence
+- BoltDB is used to store the state of tasks.
+- This ensures that task information is persistent and can be recovered in case of failures.
 
-```
-# Setup the manager from another terminal
-sudo ./cube manager -w 'localhost:5556,localhost:5557,localhost:5558' -d persistent
-```
-
-From another terminal you could POST some json. Here is an example of submitting a task to the manager:
-
-```
-sudo ./cube run --filename task1.json
-```
-
-How to stop a task:
-
-```
-sudo ./cube stop bb1d59ef-9fc1-4e4b-a44d-db571eeed203
-```
-
-Example JSON:
-
-```
-{
-    "ID": "a7aa1d44-08f6-443e-9378-f5884311019e",
-    "State": 2,
-    "Task": {
-        "State": 1,
-        "ID": "bb1d59ef-9fc1-4e4b-a44d-db571eeed203",
-        "Name": "test-task",
-        "Image": "<some_image>",
-        "ExposedPorts": {
-            "7777/tcp": {}
-        },
-        "PortBindings": {
-            "7777/tcp": "7777/tcp"
-        },
-        "HealthCheck": "/health"
-    }
-}
-```
+## Future Improvements
+- Support for more advanced scheduling algorithms.
+- Enhanced API security and authentication.
+- Improved monitoring and logging capabilities.
+- Scaling the manager to handle a larger number of workers and tasks.
